@@ -177,29 +177,37 @@ public class sqlite extends Fragment {
         AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
-        String cif = CIF.getText().toString();
-        String nombre = nom.getText().toString();
-        int hab = Integer.parseInt(habitacio.getText().toString());
-        int fact = Integer.parseInt(facturacio.getText().toString());
-        int id_po = Integer.parseInt(idPoblacio.getText().toString());
-        ContentValues cv= new ContentValues();
-        cv.put("cif",cif);
-        cv.put("nom",nombre);
-        cv.put("habitacions",hab);
-        cv.put("facturacio",fact);
-        cv.put("poblacio_id",id_po);
 
-        int cant = db.update("hotels",cv,"cif='"+cif+"'",null);
-        db.close();
-        clear();
-        if (cant==1){
-            Toast.makeText(v.getContext(),"Hotel modificado",
+        try {
+            String cif = CIF.getText().toString();
+            String nombre = nom.getText().toString();
+            int hab = Integer.parseInt(habitacio.getText().toString());
+            int fact = Integer.parseInt(facturacio.getText().toString());
+            int id_po = Integer.parseInt(idPoblacio.getText().toString());
+            ContentValues cv = new ContentValues();
+            cv.put("cif", cif);
+            cv.put("nom", nombre);
+            cv.put("habitacions", hab);
+            cv.put("facturacio", fact);
+            cv.put("poblacio_id", id_po);
+            int cant = db.update("hotels",cv,"cif='"+cif+"'",null);
+            db.close();
+            clear();
+            if (cant==1){
+                Toast.makeText(v.getContext(),"Hotel modificado",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(v.getContext(),"No existe",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(v.getContext(),"Vuelva a introducir los valores guapo",
                     Toast.LENGTH_SHORT).show();
         }
-        else{
-            Toast.makeText(v.getContext(),"No existe",
-                    Toast.LENGTH_SHORT).show();
-        }
+
+
+
     }
 
 

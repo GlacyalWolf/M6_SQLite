@@ -21,5 +21,10 @@
             android:id="@+id/nav_sqlite"
 
             android:title="I Love SQLite" />
+
+        <item
+            android:id="@+id/nav_listahoteles"
+
+            android:title="Lista Hoteles" />
     </group>
 </menu>

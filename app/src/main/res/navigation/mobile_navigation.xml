@@ -28,5 +28,11 @@
         android:label="sqlite"
         tools:layout="@layout/fragment_sqlite" />
 
+    <fragment
+        android:id="@+id/nav_listahoteles"
+        android:name="com.example.m6_sqlite.ListaHoteles"
+        android:label="Lista Hoteles"
+        tools:layout="@layout/fragment_lista_hoteles" />
+
 
 </navigation>
