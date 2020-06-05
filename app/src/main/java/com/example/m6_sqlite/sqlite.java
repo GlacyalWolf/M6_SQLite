@@ -73,26 +73,30 @@ public class sqlite extends Fragment {
 
     //DAMOS DE ALTA HOTEL
     public void alta(View v){
+        //INIZILIZAMOS BASES DE DATOS
         AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
 
-
+        //Try para recojer errores al havcer pase a integres
         try {
             String cif = CIF.getText().toString();
             String nombre = nom.getText().toString();
             int hab = Integer.parseInt(habitacio.getText().toString());
             int fact = Integer.parseInt(facturacio.getText().toString());
             int id_po = Integer.parseInt(idPoblacio.getText().toString());
+            //Recojemos todos los edittext i los cargamos en un conetent view
             ContentValues cv= new ContentValues();
             cv.put("cif",cif);
             cv.put("nom",nombre);
             cv.put("habitacions",hab);
             cv.put("facturacio",fact);
             cv.put("poblacio_id",id_po);
+            //-hacemos la insercion en latabla hoteles con el content values
             db.insert("hotels",null,cv);
             db.close();
             clear();
+
 
         }catch (Exception e){
             clear();
@@ -108,17 +112,22 @@ public class sqlite extends Fragment {
 
     //CONSULTAMOS POR CIF
     public void consultaCif(View v){
+        //INIZILIZAMOS BASES DE DATOS
         AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
+
         String cif = CIF.getText().toString();
+        //Creamos un cursor para recojer la consulta
         Cursor fila= db.rawQuery("select * from hotels where cif='"+cif+"'",null);
 
         if(fila.moveToFirst()){
 
+            //creamos otro cursor para recojer la consulta para saver que poblaciones segun el id
             Cursor poblacion= db.rawQuery("select nom from poblacions where id="+fila.getString(4),null);
             poblacion.moveToFirst();
 
+            //colocamos los valores del cursor el los edit text
             CIF.setText(fila.getString(0));
             nom.setText(fila.getString(1));
             habitacio.setText(fila.getString(2));
@@ -133,15 +142,19 @@ public class sqlite extends Fragment {
 
 
     }
-
+    //BOTRRAR HOTEL POR CIF
     public void deleteCif(View v){
+        //INIZILIZAMOS BASES DE DATOS
         AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
         String cif = CIF.getText().toString();
+
+        //recojemos la respuesta para saver si se ha borrado o no
         int cant= db.delete("hotels","cif='"+cif+"'",null);
         db.close();
         clear();
+        //verificamos si se ha borrado
         if(cant==1){
             Toast.makeText(v.getContext(),"Item Borrado",
                     Toast.LENGTH_SHORT).show();
@@ -154,7 +167,13 @@ public class sqlite extends Fragment {
 
     }
 
+    //ACTIUALIZAR HOTEL POR CIF
+    //es la misma operación que en el select pero havciendo un update i canviadno las caracteristicas
+    //del hotel segun el CIF
+
     public void updateCif(View v){
+
+        //INIZILIZAMOS BASES DE DATOS
         AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
@@ -189,7 +208,7 @@ public class sqlite extends Fragment {
 
 
 
-
+    //RESTABLECER TEXTVIEWS
     public void clear(){
         CIF.setText("");
         nom.setText("");
