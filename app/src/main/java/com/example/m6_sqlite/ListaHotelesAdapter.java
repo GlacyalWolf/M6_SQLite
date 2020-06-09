@@ -38,9 +38,9 @@ public class ListaHotelesAdapter extends RecyclerView.Adapter<ListaHotelesAdapte
 
         holder.cif.setText(cif);
         holder.nom.setText(nom);
-        holder.habitacions.setText(habit);
-        holder.factracio.setText(fact);
-        holder.poblacio.setText(pob);
+        holder.habitacions.setText(String.valueOf(habit));
+        holder.factracio.setText(String.valueOf(fact));
+        holder.poblacio.setText(String.valueOf(pob));
 
     }
 

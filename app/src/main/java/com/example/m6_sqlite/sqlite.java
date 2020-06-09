@@ -17,6 +17,9 @@ import android.widget.Toast;
 import com.example.m6_sqlite.room.RoomConnection;
 import com.example.m6_sqlite.room.hotels;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 
 public class sqlite extends Fragment {
     EditText CIF,nom,habitacio,facturacio,idPoblacio;
@@ -167,6 +170,14 @@ public class sqlite extends Fragment {
 
         RoomConnection ro=RoomConnection.getRoomConnection(getContext());
 
+        hotels hotels= new hotels();
+        hotels=ro.hotelsDAO().getAllCif(CIF.getText().toString());
+        CIF.setText(hotels.getCif());
+        nom.setText(hotels.getNom());
+        habitacio.setText(String.valueOf(hotels.getHabitacions()));
+        facturacio.setText(String.valueOf(hotels.getFacturacio()));
+        idPoblacio.setText(String.valueOf(hotels.getPoblacio_id()));
+
 
 
 
@@ -179,7 +190,7 @@ public class sqlite extends Fragment {
     //BOTRRAR HOTEL POR CIF
     public void deleteCif(View v){
         //INIZILIZAMOS BASES DE DATOS
-        AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
+        /*AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
         String cif = CIF.getText().toString();
@@ -198,6 +209,21 @@ public class sqlite extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
 
+         */
+        RoomConnection ro=RoomConnection.getRoomConnection(getContext());
+
+        List<hotels> listh=ro.hotelsDAO().getAll();
+        for (hotels h:listh){
+            if (h.getCif().equals(CIF.getText().toString())){
+                ro.hotelsDAO().delete(h);
+                break;
+            }
+        }
+
+        ro.close();
+
+
+
 
     }
 
@@ -208,7 +234,7 @@ public class sqlite extends Fragment {
     public void updateCif(View v){
 
         //INIZILIZAMOS BASES DE DATOS
-        AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
+        /*AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
 
@@ -239,6 +265,36 @@ public class sqlite extends Fragment {
             Toast.makeText(v.getContext(),"Vuelva a introducir los valores guapo",
                     Toast.LENGTH_SHORT).show();
         }
+
+         */
+
+        RoomConnection ro=RoomConnection.getRoomConnection(getContext());
+
+        String cif = CIF.getText().toString();
+        String nombre = nom.getText().toString();
+        int hab = Integer.parseInt(habitacio.getText().toString());
+        int fact = Integer.parseInt(facturacio.getText().toString());
+        int id_po = Integer.parseInt(idPoblacio.getText().toString());
+
+        hotels hotel= new hotels();
+        hotel.setCif(cif);
+        hotel.setNom(nombre);
+        hotel.setHabitacions(hab);
+        hotel.setFacturacio(fact);
+        hotel.setPoblacio_id(id_po);
+
+        List<hotels> listh=ro.hotelsDAO().getAll();
+        for (hotels h:listh){
+            if (h.getCif().equals(CIF.getText().toString())){
+                ro.hotelsDAO().upadate(hotel);
+                break;
+            }
+        }
+
+        ro.close();
+
+
+
 
 
 
