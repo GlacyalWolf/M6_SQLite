@@ -1,5 +1,5 @@
 package com.example.m6_sqlite;
-
+//clase para crear una array list de hoteles
 public class Hotel {
     String cif,nom,poblacio,habitacions,facturacio;
 

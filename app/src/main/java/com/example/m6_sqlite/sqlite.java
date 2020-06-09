@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.m6_sqlite.room.RoomConnection;
+import com.example.m6_sqlite.room.hotels;
+
 
 public class sqlite extends Fragment {
     EditText CIF,nom,habitacio,facturacio,idPoblacio;
@@ -74,7 +77,7 @@ public class sqlite extends Fragment {
     //DAMOS DE ALTA HOTEL
     public void alta(View v){
         //INIZILIZAMOS BASES DE DATOS
-        AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
+        /*AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
 
@@ -104,6 +107,27 @@ public class sqlite extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
 
+         */
+
+        RoomConnection ro=RoomConnection.getRoomConnection(getContext());
+
+
+        String cif = CIF.getText().toString();
+        String nombre = nom.getText().toString();
+        int hab = Integer.parseInt(habitacio.getText().toString());
+        int fact = Integer.parseInt(facturacio.getText().toString());
+        int id_po = Integer.parseInt(idPoblacio.getText().toString());
+
+        hotels hotel= new hotels();
+        hotel.setCif(cif);
+        hotel.setNom(nombre);
+        hotel.setHabitacions(hab);
+        hotel.setFacturacio(fact);
+        hotel.setPoblacio_id(id_po);
+
+        ro.hotelsDAO().insertAll(hotel);
+        ro.close();
+
 
 
 
@@ -113,7 +137,7 @@ public class sqlite extends Fragment {
     //CONSULTAMOS POR CIF
     public void consultaCif(View v){
         //INIZILIZAMOS BASES DE DATOS
-        AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
+        /*AdminSQLiteOpenHelper admin= new AdminSQLiteOpenHelper(v.getContext(),"administracion",
                 null,1);
         SQLiteDatabase db= admin.getWritableDatabase();
 
@@ -138,7 +162,17 @@ public class sqlite extends Fragment {
             Toast.makeText(v.getContext(),"No existe hotel con este cif",
                     Toast.LENGTH_SHORT).show();
         }
-        db.close();
+        db.close();*/
+
+
+        RoomConnection ro=RoomConnection.getRoomConnection(getContext());
+
+
+
+
+        ro.close();
+
+
 
 
     }

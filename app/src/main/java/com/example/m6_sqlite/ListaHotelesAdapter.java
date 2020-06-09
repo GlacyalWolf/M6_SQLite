@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.m6_sqlite.room.hotels;
+
 import java.util.ArrayList;
 
 public class ListaHotelesAdapter extends RecyclerView.Adapter<ListaHotelesAdapter.ViewHolder> {
-    ArrayList<Hotel> listh=new ArrayList<>();
+    ArrayList<hotels> listh=new ArrayList<>();
 
-    public ListaHotelesAdapter(ArrayList<Hotel> listh) {
+    public ListaHotelesAdapter(ArrayList<hotels> listh) {
         this.listh = listh;
     }
 
@@ -30,9 +32,9 @@ public class ListaHotelesAdapter extends RecyclerView.Adapter<ListaHotelesAdapte
     public void onBindViewHolder(@NonNull ListaHotelesAdapter.ViewHolder holder, int position) {
         String cif=listh.get(position).getCif();
         String nom=listh.get(position).getNom();
-        String habit=listh.get(position).getHabitacions();
-        String fact= listh.get(position).getFacturacio();
-        String pob=listh.get(position).getPoblacio();
+        int habit=listh.get(position).getHabitacions();
+        int fact= listh.get(position).getFacturacio();
+        int pob=listh.get(position).getPoblacio_id();
 
         holder.cif.setText(cif);
         holder.nom.setText(nom);
